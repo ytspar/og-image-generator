@@ -1,0 +1,2 @@
+# Mark font files as binary to prevent line-ending transformation
+*.woff2 binary

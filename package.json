@@ -1,0 +1,66 @@
+{
+  "name": "og-image-generator",
+  "version": "0.1.0",
+  "description": "Reusable OG image generator with SVG templating, PNG rasterization, and meta tag generation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "og-image": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "!dist/**/*.test.js",
+    "!dist/**/*.test.d.ts",
+    "fonts",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run test",
+    "prepublishOnly": "npm run check && npm run build"
+  },
+  "keywords": [
+    "og-image",
+    "open-graph",
+    "social-card",
+    "meta-tags",
+    "svg",
+    "png"
+  ],
+  "author": "ytspar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytspar/og-image-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ytspar/og-image-generator/issues"
+  },
+  "homepage": "https://github.com/ytspar/og-image-generator#readme",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "commander": "^14.0.0",
+    "sharp": "^0.33.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

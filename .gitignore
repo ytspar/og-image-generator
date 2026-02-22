@@ -1,0 +1,29 @@
+node_modules/
+dist/
+*.png
+*.tgz
+.DS_Store
+
+# Secrets and credentials
+.env
+.env.*
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# IDE and editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and coverage
+*.log
+coverage/
+.nyc_output/
+
+# Build artifacts
+*.tsbuildinfo
