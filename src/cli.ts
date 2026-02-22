@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 
 import { readFile, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { generate } from "./renderer/renderer.js";
 import { generateMetaTags } from "./meta/meta-tags.js";
 import { listPresetDetails } from "./preset/presets.js";
 import type { OgImageConfig } from "./types.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(
+  await readFile(resolve(__dirname, "..", "package.json"), "utf-8"),
+) as { version: string };
 
 const program = new Command();
 
@@ -21,7 +27,7 @@ program
       "List available style presets:\n" +
       "  og-image presets",
   )
-  .version("0.1.0");
+  .version(pkg.version);
 
 program
   .command("presets")

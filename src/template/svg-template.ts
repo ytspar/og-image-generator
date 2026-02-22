@@ -257,8 +257,10 @@ export function buildSvg(config: OgImageConfig): string {
   );
 
   // Project name
+  const nameFontWeight = config.style?.nameFontWeight ?? 700;
+  const nameLetterSpacing = config.style?.nameLetterSpacing ?? 2;
   parts.push(
-    `  <text x="${centerX}" y="${layout.nameY}" font-family="${fontFamily}" font-size="${FONT_SIZE_NAME}" font-weight="700" fill="${colors.accent}" text-anchor="middle" letter-spacing="2">${name}</text>`,
+    `  <text x="${centerX}" y="${layout.nameY}" font-family="${fontFamily}" font-size="${FONT_SIZE_NAME}" font-weight="${nameFontWeight}" fill="${colors.accent}" text-anchor="middle" letter-spacing="${nameLetterSpacing}">${name}</text>`,
   );
 
   // Tagline

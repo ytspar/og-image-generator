@@ -14,10 +14,10 @@ npm install og-image-generator
 
 ```bash
 # Minimal — just a project name
-npx og-image generate --name "My Project"
+npx og-image-generator generate --name "My Project"
 
 # Full options
-npx og-image generate \
+npx og-image-generator generate \
   --name "hetzner-cli" \
   --tagline "A modern CLI for Hetzner Cloud" \
   --features Servers Firewalls "Load Balancers" \
@@ -30,7 +30,7 @@ npx og-image generate \
   --image-url "https://hetzner.github.io/cli/og-image.png"
 
 # From a JSON config file
-npx og-image generate --config og-image.json
+npx og-image-generator generate --config og-image.json
 ```
 
 ### Node.js API
@@ -66,7 +66,7 @@ console.log(meta.html);
 
 ## CLI reference
 
-### `og-image generate`
+### `og-image generate` / `og-image-generator generate`
 
 Generate a 1200x630 PNG image.
 
@@ -89,7 +89,7 @@ Generate a 1200x630 PNG image.
 | `--image-url <url>` | Public URL where the image will be hosted (for `og:image`) |
 | `--config <path>` | Path to a JSON config file (all other flags are ignored) |
 
-### `og-image presets`
+### `og-image presets` / `og-image-generator presets`
 
 List all registered style presets with their descriptions and decoration details.
 
@@ -231,7 +231,7 @@ Explicit fields always override the preset. For example, `{ preset: "terminal", 
 List them from the CLI:
 
 ```bash
-npx og-image presets
+npx og-image-generator presets
 ```
 
 ### Custom presets
@@ -296,7 +296,7 @@ Now usable as:
 ```
 
 ```bash
-npx og-image generate --name "Acme Corp" --preset corporate
+npx og-image-generator generate --name "Acme Corp" --preset corporate
 ```
 
 > **Note:** `registerPreset` must be called before `generate` — it modifies the in-process registry. For CLI usage, register presets in a wrapper script that imports the CLI.
@@ -379,7 +379,7 @@ All attribute values are HTML-escaped. Relative `imageUrl` values are resolved a
 From the CLI, add `--meta` to print meta tags to stdout:
 
 ```bash
-npx og-image generate --name "My Project" --meta --image-url "https://example.com/og.png"
+npx og-image-generator generate --name "My Project" --meta --image-url "https://example.com/og.png"
 ```
 
 ### `MetaTagsConfig`
