@@ -78,6 +78,10 @@ export interface StyleConfig {
   cornerBrackets?: boolean | CornerBracketOptions;
   /** Radial gradient glow behind logo (default: on) */
   radialGlow?: boolean | RadialGlowOptions;
+  /** Font weight for the project name (default: 700) */
+  nameFontWeight?: number;
+  /** Letter spacing for the project name — number (px) or string with units e.g. "-0.0225em" (default: 2) */
+  nameLetterSpacing?: number | string;
   /**
    * Base preset to start from. Can be:
    * - A built-in name: `"minimal"`, `"terminal"`
