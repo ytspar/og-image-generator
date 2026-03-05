@@ -1,6 +1,6 @@
 {
   "name": "og-image-generator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Reusable OG image generator with SVG templating, PNG rasterization, and meta tag generation",
   "type": "module",
   "main": "./dist/index.js",
