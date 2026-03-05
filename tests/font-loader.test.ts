@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
+import { describe, expect, it } from "vitest";
 import {
   getBundledFontPaths,
-  loadFontBuffers,
   getFontFamily,
+  loadFontBuffers,
 } from "../src/font/font-loader.js";
 
 describe("getBundledFontPaths", () => {

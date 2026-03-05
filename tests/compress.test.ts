@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import sharp from "sharp";
+import { describe, expect, it } from "vitest";
 import { compressPng } from "../src/renderer/compress.js";
 
 describe("compressPng", () => {

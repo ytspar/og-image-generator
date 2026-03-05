@@ -1,25 +1,25 @@
 // --- Logo configuration ---
 
 export interface LogoSvgInline {
-  type: "svg-inline";
   /** Raw SVG content (inner elements, no <svg> wrapper needed) */
   content: string;
+  type: "svg-inline";
   /** viewBox dimensions, e.g. "0 0 100 100" */
   viewBox: string;
 }
 
 export interface LogoSvgFile {
-  type: "svg-file";
   /** Path to SVG file */
   path: string;
   /** Optional CSS selector for a <g> element to extract (e.g. "#wordmark") */
   selector?: string;
+  type: "svg-file";
 }
 
 export interface LogoText {
-  type: "text";
   /** Text to display as logo fallback */
   text: string;
+  type: "text";
 }
 
 export type LogoConfig = LogoSvgInline | LogoSvgFile | LogoText;
@@ -27,10 +27,10 @@ export type LogoConfig = LogoSvgInline | LogoSvgFile | LogoText;
 // --- Color configuration ---
 
 export interface ColorConfig {
-  /** Background color (default: "#0a0a0a") */
-  background?: string;
   /** Accent color for project name and highlights (default: "#22d3ee") */
   accent?: string;
+  /** Background color (default: "#0a0a0a") */
+  background?: string;
   /** Dim color for secondary text (default: "#a1a1aa") */
   dim?: string;
   /** Primary text color (default: "#fafafa") */
@@ -40,12 +40,12 @@ export interface ColorConfig {
 // --- Font configuration ---
 
 export interface FontConfig {
-  /** Path to regular weight font file (TTF, OTF, or WOFF2) */
-  path?: string;
   /** Path to bold weight font file */
   boldPath?: string;
   /** Font family name (default: "Inter") */
   family?: string;
+  /** Path to regular weight font file (TTF, OTF, or WOFF2) */
+  path?: string;
 }
 
 // --- Style configuration ---
@@ -63,21 +63,17 @@ export interface CornerBracketOptions {
 }
 
 export interface RadialGlowOptions {
-  /** Opacity of radial glow (default: 0.15) */
-  opacity?: number;
   /** Vertical center as SVG percentage (default: "35%") */
   cy?: string;
+  /** Opacity of radial glow (default: 0.15) */
+  opacity?: number;
   /** Radius as SVG percentage (default: "50%") */
   r?: string;
 }
 
 export interface StyleConfig {
-  /** Horizontal scanline overlay */
-  scanlines?: boolean | ScanlineOptions;
   /** Pixel-art corner frame brackets */
   cornerBrackets?: boolean | CornerBracketOptions;
-  /** Radial gradient glow behind logo (default: on) */
-  radialGlow?: boolean | RadialGlowOptions;
   /** Font weight for the project name (default: 700) */
   nameFontWeight?: number;
   /** Letter spacing for the project name — number (px) or string with units e.g. "-0.0225em" (default: 2) */
@@ -93,80 +89,84 @@ export interface StyleConfig {
    * fields on the config always take precedence over the preset.
    */
   preset?: string | import("./preset/presets.js").Preset;
+  /** Radial gradient glow behind logo (default: on) */
+  radialGlow?: boolean | RadialGlowOptions;
+  /** Horizontal scanline overlay */
+  scanlines?: boolean | ScanlineOptions;
 }
 
 // --- Main config ---
 
 export interface OgImageConfig {
-  /** Project name (required) */
-  name: string;
-  /** Short tagline displayed below the name */
-  tagline?: string;
+  /** Color configuration */
+  colors?: ColorConfig;
   /** Longer description (used for meta tags, not rendered in image) */
   description?: string;
   /** Feature keywords displayed as pills */
   features?: string[];
+  /** Font configuration */
+  font?: FontConfig;
   /** Footer text (e.g. URL or version) */
   footer?: string;
-  /** Canonical URL (used for meta tags) */
-  url?: string;
+  /** Image height in pixels (default: 630) */
+  height?: number;
   /** URL where the generated image will be hosted (for meta tags) */
   imageUrl?: string;
   /** Logo configuration */
   logo?: LogoConfig;
-  /** Color configuration */
-  colors?: ColorConfig;
-  /** Font configuration */
-  font?: FontConfig;
+  /** Project name (required) */
+  name: string;
   /** Style/decoration configuration */
   style?: StyleConfig;
+  /** Short tagline displayed below the name */
+  tagline?: string;
+  /** Canonical URL (used for meta tags) */
+  url?: string;
   /** Image width in pixels (default: 1200) */
   width?: number;
-  /** Image height in pixels (default: 630) */
-  height?: number;
 }
 
 // --- Generation result ---
 
 export interface GenerateResult {
-  /** Raw SVG string */
-  svg: string;
+  /** Image height */
+  height: number;
   /** Compressed PNG buffer */
   png: Buffer;
   /** PNG file size in bytes */
   pngSize: number;
+  /** Raw SVG string */
+  svg: string;
   /** Image width */
   width: number;
-  /** Image height */
-  height: number;
 }
 
 // --- Meta tags ---
 
 export interface MetaTag {
-  /** Tag name, e.g. "meta" */
-  tag: string;
   /** Tag attributes */
   attributes: Record<string, string>;
+  /** Tag name, e.g. "meta" */
+  tag: string;
 }
 
 export interface MetaTagsConfig {
-  /** Page title */
-  title: string;
   /** Page description */
   description?: string;
-  /** Canonical URL of the page */
-  url?: string;
+  /** Image height (default: 630) */
+  imageHeight?: number;
   /** URL to the OG image */
   imageUrl: string;
   /** Image width (default: 1200) */
   imageWidth?: number;
-  /** Image height (default: 630) */
-  imageHeight?: number;
-  /** Site name (e.g. "GitHub") */
-  siteName?: string;
   /** Locale (e.g. "en_US") */
   locale?: string;
+  /** Site name (e.g. "GitHub") */
+  siteName?: string;
+  /** Page title */
+  title: string;
+  /** Canonical URL of the page */
+  url?: string;
 }
 
 export interface MetaTagsResult {

@@ -1,16 +1,18 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   definePreset,
-  registerPreset,
   getPreset,
-  listPresets,
   listPresetDetails,
-  resolvePreset,
+  listPresets,
   minimal,
+  registerPreset,
+  resolvePreset,
   terminal,
 } from "../src/preset/presets.js";
-import { buildSvg } from "../src/template/svg-template.js";
-import { resolveStyle } from "../src/template/svg-template.js";
+import { buildSvg, resolveStyle } from "../src/template/svg-template.js";
+
+const ALREADY_REGISTERED_RE = /already registered/;
+const UNKNOWN_PRESET_RE = /Unknown preset/;
 
 describe("definePreset", () => {
   it("returns the same preset object", () => {
@@ -93,9 +95,9 @@ describe("registerPreset / getPreset / listPresets", () => {
   });
 
   it("throws on duplicate registration", () => {
-    expect(() =>
-      registerPreset(definePreset({ name: "minimal" })),
-    ).toThrow(/already registered/);
+    expect(() => registerPreset(definePreset({ name: "minimal" }))).toThrow(
+      ALREADY_REGISTERED_RE
+    );
   });
 
   it("getPreset returns undefined for unknown names", () => {
@@ -122,7 +124,7 @@ describe("resolvePreset", () => {
 
   it("throws for unknown string name", () => {
     expect(() => resolvePreset("nonexistent-preset")).toThrow(
-      /Unknown preset/,
+      UNKNOWN_PRESET_RE
     );
   });
 });

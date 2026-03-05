@@ -1,8 +1,8 @@
 import type {
   ColorConfig,
-  ScanlineOptions,
   CornerBracketOptions,
   RadialGlowOptions,
+  ScanlineOptions,
 } from "../types.js";
 
 // --- Preset definition ---
@@ -54,19 +54,19 @@ import type {
  * ```
  */
 export interface Preset {
-  /** Unique preset name (used for CLI --preset and config files) */
-  name: string;
-  /** Short human-readable description */
-  description?: string;
   /** Color overrides applied when this preset is active.
    *  Individual color fields are optional — omitted fields keep their defaults. */
   colors?: ColorConfig;
-  /** Scanline overlay. `false` = off, `true` = default options, or provide options. */
-  scanlines?: boolean | ScanlineOptions;
   /** Corner bracket frame. `false` = off, `true` = default options, or provide options. */
   cornerBrackets?: boolean | CornerBracketOptions;
+  /** Short human-readable description */
+  description?: string;
+  /** Unique preset name (used for CLI --preset and config files) */
+  name: string;
   /** Radial glow behind logo. `false` = off, `true` = default options, or provide options. */
   radialGlow?: boolean | RadialGlowOptions;
+  /** Scanline overlay. `false` = off, `true` = default options, or provide options. */
+  scanlines?: boolean | ScanlineOptions;
 }
 
 // --- Built-in presets ---
@@ -132,7 +132,7 @@ export function definePreset(preset: Preset): Preset {
 export function registerPreset(preset: Preset): void {
   if (registry.has(preset.name)) {
     throw new Error(
-      `Preset "${preset.name}" is already registered. Use a different name.`,
+      `Preset "${preset.name}" is already registered. Use a different name.`
     );
   }
   registry.set(preset.name, preset);
@@ -173,7 +173,7 @@ export function resolvePreset(ref: string | Preset | undefined): Preset {
     if (!preset) {
       const available = listPresets().join(", ");
       throw new Error(
-        `Unknown preset "${ref}". Available presets: ${available}`,
+        `Unknown preset "${ref}". Available presets: ${available}`
       );
     }
     return preset;

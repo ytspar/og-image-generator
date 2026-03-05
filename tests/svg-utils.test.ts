@@ -1,13 +1,13 @@
-import { describe, it, expect } from "vitest";
-import { writeFile, unlink } from "node:fs/promises";
-import { join } from "node:path";
+import { unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { describe, expect, it } from "vitest";
 import {
   escapeSvgText,
-  truncateText,
   estimateTextWidth,
-  maxCharsForWidth,
   extractSvgContent,
+  maxCharsForWidth,
+  truncateText,
 } from "../src/template/svg-utils.js";
 
 describe("escapeSvgText", () => {
@@ -21,7 +21,7 @@ describe("escapeSvgText", () => {
 
   it("escapes quotes", () => {
     expect(escapeSvgText(`He said "hello" & 'bye'`)).toBe(
-      "He said &quot;hello&quot; &amp; &apos;bye&apos;",
+      "He said &quot;hello&quot; &amp; &apos;bye&apos;"
     );
   });
 

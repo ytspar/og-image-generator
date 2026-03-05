@@ -1,4 +1,4 @@
-import type { MetaTagsConfig, MetaTagsResult, MetaTag } from "../types.js";
+import type { MetaTag, MetaTagsConfig, MetaTagsResult } from "../types.js";
 
 function escapeHtmlAttr(value: string): string {
   return value
@@ -9,11 +9,15 @@ function escapeHtmlAttr(value: string): string {
 }
 
 function resolveUrl(imageUrl: string, baseUrl?: string): string {
-  if (!baseUrl || imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+  if (
+    !baseUrl ||
+    imageUrl.startsWith("http://") ||
+    imageUrl.startsWith("https://")
+  ) {
     return imageUrl;
   }
   // Resolve relative URL against base
-  const base = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+  const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const image = imageUrl.startsWith("/") ? imageUrl.slice(1) : imageUrl;
   return new URL(image, base).href;
 }

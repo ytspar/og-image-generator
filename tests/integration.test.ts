@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { generate } from "../src/renderer/renderer.js";
+import { describe, expect, it } from "vitest";
 import { generateMetaTags } from "../src/meta/meta-tags.js";
+import { generate } from "../src/renderer/renderer.js";
 import type { OgImageConfig } from "../src/types.js";
 
 describe("integration", () => {
@@ -76,7 +76,7 @@ describe("integration", () => {
       title: config.name,
       description: config.description,
       url: config.url,
-      imageUrl: config.imageUrl!,
+      imageUrl: config.imageUrl ?? "",
       imageWidth: result.width,
       imageHeight: result.height,
     });

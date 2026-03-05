@@ -1,24 +1,24 @@
+import { getFontFamily } from "../font/font-loader.js";
+import type { Preset } from "../preset/presets.js";
+import { resolvePreset } from "../preset/presets.js";
 import type {
-  OgImageConfig,
-  StyleConfig,
   ColorConfig,
   LogoConfig,
+  OgImageConfig,
+  StyleConfig,
 } from "../types.js";
-import { escapeSvgText, truncateText } from "./svg-utils.js";
 import {
-  DEFAULT_WIDTH,
-  DEFAULT_HEIGHT,
   CONTENT_WIDTH,
-  FONT_SIZE_NAME,
-  FONT_SIZE_TAGLINE,
+  calculateLayout,
+  DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
+  FEATURE_SEPARATOR,
   FONT_SIZE_FEATURES,
   FONT_SIZE_FOOTER,
-  FEATURE_SEPARATOR,
-  calculateLayout,
+  FONT_SIZE_NAME,
+  FONT_SIZE_TAGLINE,
 } from "./layout.js";
-import { getFontFamily } from "../font/font-loader.js";
-import { resolvePreset } from "../preset/presets.js";
-import type { Preset } from "../preset/presets.js";
+import { escapeSvgText, truncateText } from "./svg-utils.js";
 
 // --- Default colors ---
 
@@ -32,18 +32,22 @@ const DEFAULT_COLORS: Required<ColorConfig> = {
 // --- Style resolution ---
 
 export interface ResolvedStyle {
-  scanlines: false | { opacity: number };
+  colors: ColorConfig;
   cornerBrackets: false | { opacity: number; strokeWidth: number };
   radialGlow: false | { opacity: number; cy: string; r: string };
-  colors: ColorConfig;
+  scanlines: false | { opacity: number };
 }
 
 function resolveBoolOrOptions<T extends Record<string, unknown>>(
   value: boolean | Partial<T> | undefined,
-  defaults: T,
+  defaults: T
 ): false | T {
-  if (value === undefined || value === false) return false;
-  if (value === true) return defaults;
+  if (value === undefined || value === false) {
+    return false;
+  }
+  if (value === true) {
+    return defaults;
+  }
   // Safe assertion: spreading complete T with Partial<T> always yields T
   return { ...defaults, ...value } as T;
 }
@@ -56,10 +60,9 @@ export function resolveStyle(style?: StyleConfig): ResolvedStyle {
   const preset: Preset = resolvePreset(style?.preset);
 
   // Start from preset decoration values
-  let scanlines = resolveBoolOrOptions<{ opacity: number }>(
-    preset.scanlines,
-    { opacity: 0.03 },
-  );
+  let scanlines = resolveBoolOrOptions<{ opacity: number }>(preset.scanlines, {
+    opacity: 0.03,
+  });
   let cornerBrackets = resolveBoolOrOptions<{
     opacity: number;
     strokeWidth: number;
@@ -95,7 +98,7 @@ export function resolveStyle(style?: StyleConfig): ResolvedStyle {
 
 function buildDefs(
   colors: Required<ColorConfig>,
-  resolved: ResolvedStyle,
+  resolved: ResolvedStyle
 ): string {
   const parts: string[] = [];
 
@@ -114,7 +117,9 @@ function buildDefs(
     </pattern>`);
   }
 
-  if (parts.length === 0) return "";
+  if (parts.length === 0) {
+    return "";
+  }
   return `<defs>${parts.join("")}\n  </defs>`;
 }
 
@@ -122,7 +127,7 @@ function buildBackground(
   colors: Required<ColorConfig>,
   resolved: ResolvedStyle,
   width: number,
-  height: number,
+  height: number
 ): string {
   let bg = `<rect width="${width}" height="${height}" fill="${colors.background}"/>`;
 
@@ -141,9 +146,11 @@ function buildCornerBrackets(
   resolved: ResolvedStyle,
   colors: Required<ColorConfig>,
   width: number,
-  height: number,
+  height: number
 ): string {
-  if (!resolved.cornerBrackets) return "";
+  if (!resolved.cornerBrackets) {
+    return "";
+  }
 
   const { opacity, strokeWidth } = resolved.cornerBrackets;
   const m = 24; // margin from edge
@@ -165,9 +172,11 @@ function buildLogo(
   y: number,
   logoHeight: number,
   colors: Required<ColorConfig>,
-  fontFamily: string,
+  fontFamily: string
 ): string {
-  if (!logo) return "";
+  if (!logo) {
+    return "";
+  }
 
   if (logo.type === "text") {
     const escaped = escapeSvgText(logo.text);
@@ -190,9 +199,11 @@ function buildFeatures(
   centerX: number,
   y: number,
   colors: Required<ColorConfig>,
-  fontFamily: string,
+  fontFamily: string
 ): string {
-  if (features.length === 0) return "";
+  if (features.length === 0) {
+    return "";
+  }
 
   const text = features.join(FEATURE_SEPARATOR);
   const escaped = escapeSvgText(text);
@@ -223,11 +234,9 @@ export function buildSvg(config: OgImageConfig): string {
   // Truncate text to fit
   const maxNameChars = Math.floor(CONTENT_WIDTH / (FONT_SIZE_NAME * 0.55));
   const maxTaglineChars = Math.floor(
-    CONTENT_WIDTH / (FONT_SIZE_TAGLINE * 0.55),
+    CONTENT_WIDTH / (FONT_SIZE_TAGLINE * 0.55)
   );
-  const maxFooterChars = Math.floor(
-    CONTENT_WIDTH / (FONT_SIZE_FOOTER * 0.55),
-  );
+  const maxFooterChars = Math.floor(CONTENT_WIDTH / (FONT_SIZE_FOOTER * 0.55));
 
   const name = escapeSvgText(truncateText(config.name, maxNameChars));
   const tagline = config.tagline
@@ -243,7 +252,9 @@ export function buildSvg(config: OgImageConfig): string {
 
   // Defs (gradients, patterns)
   const defs = buildDefs(colors, resolved);
-  if (defs) parts.push(`  ${defs}`);
+  if (defs) {
+    parts.push(`  ${defs}`);
+  }
 
   // Background + overlays
   parts.push(`  ${buildBackground(colors, resolved, width, height)}`);
@@ -253,34 +264,41 @@ export function buildSvg(config: OgImageConfig): string {
 
   // Logo
   parts.push(
-    buildLogo(config.logo, centerX, layout.logoY, layout.logoHeight, colors, fontFamily),
+    buildLogo(
+      config.logo,
+      centerX,
+      layout.logoY,
+      layout.logoHeight,
+      colors,
+      fontFamily
+    )
   );
 
   // Project name
   const nameFontWeight = config.style?.nameFontWeight ?? 700;
   const nameLetterSpacing = config.style?.nameLetterSpacing ?? 2;
   parts.push(
-    `  <text x="${centerX}" y="${layout.nameY}" font-family="${fontFamily}" font-size="${FONT_SIZE_NAME}" font-weight="${nameFontWeight}" fill="${colors.accent}" text-anchor="middle" letter-spacing="${nameLetterSpacing}">${name}</text>`,
+    `  <text x="${centerX}" y="${layout.nameY}" font-family="${fontFamily}" font-size="${FONT_SIZE_NAME}" font-weight="${nameFontWeight}" fill="${colors.accent}" text-anchor="middle" letter-spacing="${nameLetterSpacing}">${name}</text>`
   );
 
   // Tagline
   if (tagline) {
     parts.push(
-      `  <text x="${centerX}" y="${layout.taglineY}" font-family="${fontFamily}" font-size="${FONT_SIZE_TAGLINE}" fill="${colors.dim}" text-anchor="middle">${tagline}</text>`,
+      `  <text x="${centerX}" y="${layout.taglineY}" font-family="${fontFamily}" font-size="${FONT_SIZE_TAGLINE}" fill="${colors.dim}" text-anchor="middle">${tagline}</text>`
     );
   }
 
   // Features
   if (config.features?.length) {
     parts.push(
-      `  ${buildFeatures(config.features, centerX, layout.featuresY, colors, fontFamily)}`,
+      `  ${buildFeatures(config.features, centerX, layout.featuresY, colors, fontFamily)}`
     );
   }
 
   // Footer
   if (footer) {
     parts.push(
-      `  <text x="${centerX}" y="${layout.footerY}" font-family="${fontFamily}" font-size="${FONT_SIZE_FOOTER}" fill="${colors.dim}" text-anchor="middle" opacity="0.5">${footer}</text>`,
+      `  <text x="${centerX}" y="${layout.footerY}" font-family="${fontFamily}" font-size="${FONT_SIZE_FOOTER}" fill="${colors.dim}" text-anchor="middle" opacity="0.5">${footer}</text>`
     );
   }
 

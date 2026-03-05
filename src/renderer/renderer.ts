@@ -1,8 +1,8 @@
-import type { OgImageConfig, GenerateResult } from "../types.js";
+import { getFontFamily, loadFontBuffers } from "../font/font-loader.js";
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../template/layout.js";
 import { buildSvg } from "../template/svg-template.js";
-import { loadFontBuffers, getFontFamily } from "../font/font-loader.js";
+import type { GenerateResult, OgImageConfig } from "../types.js";
 import { compressPng } from "./compress.js";
-import { DEFAULT_WIDTH, DEFAULT_HEIGHT } from "../template/layout.js";
 
 export async function generate(config: OgImageConfig): Promise<GenerateResult> {
   const width = config.width ?? DEFAULT_WIDTH;
@@ -27,7 +27,10 @@ export async function generate(config: OgImageConfig): Promise<GenerateResult> {
       defaultFontFamily: fontFamily,
     },
   };
-  const resvg = new Resvg(svg, resvgOpts as ConstructorParameters<typeof Resvg>[1]);
+  const resvg = new Resvg(
+    svg,
+    resvgOpts as ConstructorParameters<typeof Resvg>[1]
+  );
 
   const rendered = resvg.render();
   const rawPng = rendered.asPng();

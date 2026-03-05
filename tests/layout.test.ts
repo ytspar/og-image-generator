@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   calculateLayout,
-  DEFAULT_WIDTH,
   DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
 } from "../src/template/layout.js";
 
 describe("calculateLayout", () => {

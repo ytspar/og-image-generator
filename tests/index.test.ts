@@ -1,51 +1,75 @@
-import { describe, it, expect } from "vitest";
-import * as api from "../src/index.js";
+import { describe, expect, it } from "vitest";
+import {
+  buildSvg,
+  calculateLayout,
+  compressPng,
+  DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
+  definePreset,
+  escapeSvgText,
+  estimateTextWidth,
+  extractSvgContent,
+  generate,
+  generateMetaTags,
+  getBundledFontPaths,
+  getFontFamily,
+  getPreset,
+  listPresetDetails,
+  listPresets,
+  loadFontBuffers,
+  maxCharsForWidth,
+  minimal,
+  registerPreset,
+  resolvePreset,
+  terminal,
+  truncateText,
+} from "../src/index.js";
 
 describe("barrel export (index.ts)", () => {
   it("exports generate function", () => {
-    expect(typeof api.generate).toBe("function");
+    expect(typeof generate).toBe("function");
   });
 
   it("exports buildSvg function", () => {
-    expect(typeof api.buildSvg).toBe("function");
+    expect(typeof buildSvg).toBe("function");
   });
 
   it("exports generateMetaTags function", () => {
-    expect(typeof api.generateMetaTags).toBe("function");
+    expect(typeof generateMetaTags).toBe("function");
   });
 
   it("exports compressPng function", () => {
-    expect(typeof api.compressPng).toBe("function");
+    expect(typeof compressPng).toBe("function");
   });
 
   it("exports font utilities", () => {
-    expect(typeof api.loadFontBuffers).toBe("function");
-    expect(typeof api.getBundledFontPaths).toBe("function");
-    expect(typeof api.getFontFamily).toBe("function");
+    expect(typeof loadFontBuffers).toBe("function");
+    expect(typeof getBundledFontPaths).toBe("function");
+    expect(typeof getFontFamily).toBe("function");
   });
 
   it("exports SVG utilities", () => {
-    expect(typeof api.escapeSvgText).toBe("function");
-    expect(typeof api.truncateText).toBe("function");
-    expect(typeof api.estimateTextWidth).toBe("function");
-    expect(typeof api.maxCharsForWidth).toBe("function");
-    expect(typeof api.extractSvgContent).toBe("function");
+    expect(typeof escapeSvgText).toBe("function");
+    expect(typeof truncateText).toBe("function");
+    expect(typeof estimateTextWidth).toBe("function");
+    expect(typeof maxCharsForWidth).toBe("function");
+    expect(typeof extractSvgContent).toBe("function");
   });
 
   it("exports layout constants and calculator", () => {
-    expect(typeof api.calculateLayout).toBe("function");
-    expect(api.DEFAULT_WIDTH).toBe(1200);
-    expect(api.DEFAULT_HEIGHT).toBe(630);
+    expect(typeof calculateLayout).toBe("function");
+    expect(DEFAULT_WIDTH).toBe(1200);
+    expect(DEFAULT_HEIGHT).toBe(630);
   });
 
   it("exports preset system", () => {
-    expect(typeof api.definePreset).toBe("function");
-    expect(typeof api.registerPreset).toBe("function");
-    expect(typeof api.getPreset).toBe("function");
-    expect(typeof api.listPresets).toBe("function");
-    expect(typeof api.listPresetDetails).toBe("function");
-    expect(typeof api.resolvePreset).toBe("function");
-    expect(api.minimal).toBeDefined();
-    expect(api.terminal).toBeDefined();
+    expect(typeof definePreset).toBe("function");
+    expect(typeof registerPreset).toBe("function");
+    expect(typeof getPreset).toBe("function");
+    expect(typeof listPresets).toBe("function");
+    expect(typeof listPresetDetails).toBe("function");
+    expect(typeof resolvePreset).toBe("function");
+    expect(minimal).toBeDefined();
+    expect(terminal).toBeDefined();
   });
 });

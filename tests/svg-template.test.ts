@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { buildSvg } from "../src/template/svg-template.js";
 import type { OgImageConfig } from "../src/types.js";
 
@@ -61,7 +61,7 @@ describe("buildSvg", () => {
   it("escapes special characters in text", () => {
     const svg = buildSvg({
       name: "A & B <C>",
-      tagline: '"quoted" & \'escaped\'',
+      tagline: "\"quoted\" & 'escaped'",
     });
     expect(svg).toContain("&amp;");
     expect(svg).toContain("&lt;");

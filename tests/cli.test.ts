@@ -1,10 +1,10 @@
-import { describe, it, expect } from "vitest";
 import { execFile as execFileCb } from "node:child_process";
-import { promisify } from "node:util";
 import { existsSync, unlinkSync } from "node:fs";
-import { join } from "node:path";
-import { writeFile, unlink } from "node:fs/promises";
+import { unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { promisify } from "node:util";
+import { describe, expect, it } from "vitest";
 
 const execFile = promisify(execFileCb);
 const CLI = join(import.meta.dirname, "..", "dist", "cli.js");

@@ -12,19 +12,19 @@ export const FONT_SIZE_FOOTER = 18;
 export const FEATURE_SEPARATOR = " | ";
 
 export interface LayoutPositions {
-  logoY: number;
-  logoHeight: number;
-  nameY: number;
-  taglineY: number;
   featuresY: number;
   footerY: number;
+  logoHeight: number;
+  logoY: number;
+  nameY: number;
+  taglineY: number;
 }
 
 export interface LayoutInput {
-  hasLogo: boolean;
-  hasTagline: boolean;
   hasFeatures: boolean;
   hasFooter: boolean;
+  hasLogo: boolean;
+  hasTagline: boolean;
   height?: number;
 }
 

@@ -7,8 +7,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const FONTS_DIR = join(__dirname, "..", "..", "fonts");
 
 export interface BundledFontPaths {
-  regular: string;
   bold: string;
+  regular: string;
 }
 
 export function getBundledFontPaths(): BundledFontPaths {
@@ -19,12 +19,12 @@ export function getBundledFontPaths(): BundledFontPaths {
 }
 
 export interface FontBuffers {
-  regular: Buffer;
   bold: Buffer;
+  regular: Buffer;
 }
 
 export async function loadFontBuffers(
-  config?: FontConfig,
+  config?: FontConfig
 ): Promise<FontBuffers> {
   const bundled = getBundledFontPaths();
 

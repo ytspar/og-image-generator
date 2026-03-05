@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { generateMetaTags } from "../src/meta/meta-tags.js";
 
 describe("generateMetaTags", () => {
@@ -44,10 +44,10 @@ describe("generateMetaTags", () => {
     });
 
     const imageTag = result.tags.find(
-      (t) => t.attributes.property === "og:image",
+      (t) => t.attributes.property === "og:image"
     );
     expect(imageTag?.attributes.content).toBe(
-      "https://example.com/projects/my-app/og.png",
+      "https://example.com/projects/my-app/og.png"
     );
   });
 
@@ -59,11 +59,9 @@ describe("generateMetaTags", () => {
     });
 
     const imageTag = result.tags.find(
-      (t) => t.attributes.property === "og:image",
+      (t) => t.attributes.property === "og:image"
     );
-    expect(imageTag?.attributes.content).toBe(
-      "https://cdn.example.com/og.png",
-    );
+    expect(imageTag?.attributes.content).toBe("https://cdn.example.com/og.png");
   });
 
   it("escapes HTML attributes", () => {
@@ -94,10 +92,10 @@ describe("generateMetaTags", () => {
     const result = generateMetaTags(baseConfig);
 
     const widthTag = result.tags.find(
-      (t) => t.attributes.property === "og:image:width",
+      (t) => t.attributes.property === "og:image:width"
     );
     const heightTag = result.tags.find(
-      (t) => t.attributes.property === "og:image:height",
+      (t) => t.attributes.property === "og:image:height"
     );
     expect(widthTag?.attributes.content).toBe("1200");
     expect(heightTag?.attributes.content).toBe("630");
